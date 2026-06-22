@@ -506,16 +506,37 @@
 //   }).catch((error)=>{
 //     console.log("error caughtt" , error)
 //   })
-console.log("welcome to dashboard");
-const p1 = new Promise((resolve)=>setTimeout(()=>resolve("User fetched")),2000)
-const p2 = new Promise((resolve)=>setTimeout(()=>resolve("Produc fetch")),2000)
-const p3 = new Promise((resolve)=>setTimeout(()=>resolve("Order fetch")),2000)
 
-Promise.all([p1,p2,p3])
-.then((result)=>{
-    console.log("all api fetch succesfully")
-    console.log("data" , result)
-})
-.catch((error)=>{
-    console.log("Padhao pe jane ki trip cancel ho gyi phir" ,error)
-})
+
+// console.log("welcome to dashboard");
+// const p1 = new Promise((resolve)=>setTimeout(()=>resolve("User fetched")),2000)
+// const p2 = new Promise((resolve)=>setTimeout(()=>resolve("Produc fetch")),2000)
+// const p3 = new Promise((resolve)=>setTimeout(()=>resolve("Order fetch")),2000)
+
+// Promise.all([p1,p2,p3])
+// .then((result)=>{
+//     console.log("all api fetch succesfully")
+//     console.log("data" , result)
+// })
+// .catch((error)=>{
+//     console.log("Padhao pe jane ki trip cancel ho gyi phir" ,error)
+// })
+
+// setTimeout(()=>{
+//     console.log("Hello")
+// } , 1000)
+
+async function processPayment(){
+    try{
+        const user = await verifyUser();
+        const balance = await checkBalance(user.walletId);
+        const success = await deductAmount(balance,500);
+        const receipt = await sendEmail(success);
+
+        console.log("Your Receipt:", receipt);
+    }catch(err){
+        console.log(err);
+    }finally{
+        console.log("Payment Processed");
+    }  
+}
